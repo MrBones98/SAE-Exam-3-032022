@@ -91,23 +91,36 @@ public class Level
     //public int HoverCells(Vector3 worldPosition)
     public int HoverCells(Ray ray)
     {
-        if(Physics.Raycast(ray,out hit,50))
+        if (Physics.Raycast(ray, out hit, 50))
         {
-            Debug.Log(hit.collider.gameObject.name);
+            //int sphereType = hit.collider.TryGetComponent<SphereMarker>().
             GameObject selectedSphere = hit.collider.gameObject;
             Vector2 pos = selectedSphere.transform.position;
             List<GameObject> neighbourSpheres = new List<GameObject>();
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    for (int j = 0; j < 3; j++)
-            //    {
-            //        if()
-            //    }
-            //}
+            neighbourSpheres.Add(selectedSphere);
+            int currentSphere = CalculateSphereType(pos);
+            for (int i = 0; i < neighbourSpheres.Count-1; i++)
+            {
+                neighbourSpheres[i].transform.Rotate(0, selectedSphere.transform.rotation.y + 45 * Time.deltaTime, 0);
+            }
             selectedSphere.transform.Rotate(0,selectedSphere.transform.rotation.y +45*Time.deltaTime,0);
             return 1;
         }
         return 0;
+    }
+
+    private int CalculateSphereType(Vector2 pos)
+    {
+        //FIGURING OUT WHAT THE VALUE OF THE SPHERE IS TO COMPARE WITH OTHERS
+        if (nodes.ContainsKey(pos))
+        {
+            if (nodes.TryGetValue(pos, out int type))
+            {
+                return type;
+            }
+            
+        }
+        return -1;
     }
 
     /// <summary>
@@ -116,10 +129,15 @@ public class Level
     /// </summary>
     /// <returns> The Number of the selected/removed cells. </returns>
     /// <param name="worldPosition">Point in worldcoordinates (this position is not necessarily inside of the grid bounds).</param>
-    public int SelectCells(Vector3 worldPosition)
+    public int SelectCells(Ray ray)
     {
         // comment the out the following line
-        return -99;
+        //return -99;
+        if (Physics.Raycast(ray, out hit, 50))
+        {            
+            return 1;
+        }
+        return 0;
     }
 
     /// <summary>

@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     void OnMouseClick()
     {
-        int numberOfSelectedCells = currentLevel.SelectCells(playerCamera.ScreenToWorldPoint(Input.mousePosition));
+        int numberOfSelectedCells = currentLevel.SelectCells(playerCamera.ScreenPointToRay(Input.mousePosition));
 
         switch (currentLevel.CheckLevelState())
         {
