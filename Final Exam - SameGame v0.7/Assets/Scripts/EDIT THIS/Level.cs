@@ -91,16 +91,20 @@ public class Level
     //public int HoverCells(Vector3 worldPosition)
     public int HoverCells(Ray ray)
     {
-        // comment the out the following line
-        //return -99;
-        //Debug.DrawRay(worldPosition,Vector3.forward);
-        //Debug.Log(worldPosition);
         if(Physics.Raycast(ray,out hit,50))
         {
-            Debug.Log("It's going inside bro");
             Debug.Log(hit.collider.gameObject.name);
             GameObject selectedSphere = hit.collider.gameObject;
-            selectedSphere.transform.Rotate(0,selectedSphere.transform.rotation.y +45,0);
+            Vector2 pos = selectedSphere.transform.position;
+            List<GameObject> neighbourSpheres = new List<GameObject>();
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        if()
+            //    }
+            //}
+            selectedSphere.transform.Rotate(0,selectedSphere.transform.rotation.y +45*Time.deltaTime,0);
             return 1;
         }
         return 0;
