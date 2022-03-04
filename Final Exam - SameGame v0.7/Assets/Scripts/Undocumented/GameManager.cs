@@ -116,7 +116,8 @@ public class GameManager : MonoBehaviour
 
     void OnMouseHover()
     {
-        currentLevel.HoverCells(playerCamera.ScreenToWorldPoint(Input.mousePosition));
+        //currentLevel.HoverCells(playerCamera.ScreenToWorldPoint(Input.mousePosition));\
+        currentLevel.HoverCells(playerCamera.ScreenPointToRay(Input.mousePosition));
     }
 
     void OnMouseClick()

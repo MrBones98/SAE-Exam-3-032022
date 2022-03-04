@@ -34,6 +34,8 @@ public class Level
     /// Returns or set the Playerscore (points the player has made).
     /// </summary>
     Dictionary<Vector2,int> nodes = new Dictionary<Vector2,int>();
+    //Ray ray;
+    RaycastHit hit;
     public int Points
     {
         get { return points; }
@@ -70,7 +72,8 @@ public class Level
             {
                 int randomNumber = Random.Range(0, prefabs.Length - 1);
                 //GameObject newSphere = new GameObject($"X: {i} Y: {j}");
-                GameObject newSphere = GameObject.Instantiate(prefabs[randomNumber], new Vector2(i,j),Quaternion.identity,parent);
+                //GameObject newSphere = GameObject.Instantiate(prefabs[randomNumber], new Vector2(i,j),Quaternion.identity,parent);
+                GameObject newSphere = GameObject.Instantiate(prefabs[randomNumber], new Vector2(i,j),Quaternion.identity);
                 nodes.Add(new Vector2(i, j), randomNumber);
                 newSphere.name = $"X: {i}, Y: {j}";
             }
@@ -85,15 +88,14 @@ public class Level
     /// </summary>
     /// <returns> The Number of the hovered cells. </returns>
     /// <param name="worldPosition">Point in worldcoordinates (this position is not necessarily inside of the grid bounds).</param>
-    public int HoverCells(Vector3 worldPosition)
+    //public int HoverCells(Vector3 worldPosition)
+    public int HoverCells(Ray ray)
     {
         // comment the out the following line
         //return -99;
-        Ray ray;
-        RaycastHit hit;
-
-        ray = Camera.main.ScreenPointToRay(worldPosition);
-        if(Physics.Raycast(ray,out hit))
+        //Debug.DrawRay(worldPosition,Vector3.forward);
+        //Debug.Log(worldPosition);
+        if(Physics.Raycast(ray,out hit,50))
         {
             Debug.Log("It's going inside bro");
             Debug.Log(hit.collider.gameObject.name);
