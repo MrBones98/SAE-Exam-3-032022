@@ -62,6 +62,16 @@ public class Level
         points = 0;
 
         // ***** Students Start here ******
+        for (int i = 0; i < cellCount_X; i++)
+        {
+            for (int j = 0; j < cellCount_Y; j++)
+            {
+                int randomNumber = Random.Range(0, prefabs.Length - 1);
+                //GameObject newSphere = new GameObject($"X: {i} Y: {j}");
+                GameObject newSphere = GameObject.Instantiate(prefabs[randomNumber],new Vector2(i,j),Quaternion.identity,parent);
+                newSphere.name = $"X: {i}, Y: {j}";
+            }
+        }
     }
 
 
@@ -108,7 +118,8 @@ public class Level
     public LevelState CheckLevelState()
     {
         // comment the out the following line
-        return LevelState.NoElementsLeft;
+        //return LevelState.NoElementsLeft;
+        return LevelState.FurtherMovesPossible;
     }
 
     /// <summary>
