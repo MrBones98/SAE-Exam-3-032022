@@ -98,7 +98,9 @@ public class Level
             Vector2 pos = selectedSphere.transform.position;
             List<GameObject> neighbourSpheres = new List<GameObject>();
             neighbourSpheres.Add(selectedSphere);
-            int currentSphere = CalculateSphereType(pos);
+            int currentSphereType = CalculateSphereType(pos);
+            //neighbourSpheres.Add(GetAdjacentCellsOfSameType(pos, currentSphereType);
+
             for (int i = 0; i < neighbourSpheres.Count-1; i++)
             {
                 neighbourSpheres[i].transform.Rotate(0, selectedSphere.transform.rotation.y + 45 * Time.deltaTime, 0);
@@ -116,6 +118,7 @@ public class Level
         {
             if (nodes.TryGetValue(pos, out int type))
             {
+                Debug.Log(type); //the type of sohere to compare with the neighbours
                 return type;
             }
             
@@ -145,10 +148,61 @@ public class Level
     /// </summary>
     /// <returns>An array of integer indices of adjacent cells with the same type (including the selected cell) (<see cref="Element.ElementType"/>) or null (if the selected cell is empty).</returns>
     /// <param name="cellIndex">Index of the original cell.</param>
-    public int[] GetAdjacentCellsOfSameType(int cellIndex)
+    public List<GameObject> GetAdjacentCellsOfSameType(Vector2 pos,int comparison)
     {
-        // comment the out the following line
-        return null;
+        List<GameObject> neighbours = new List<GameObject>();
+        if (nodes.ContainsKey(new Vector2(pos.x + 1, pos.y)))
+        {
+            if (nodes.TryGetValue(new Vector2(pos.x + 1,pos.y),out int type))
+            {
+                if (type == comparison)
+                {
+                    //Checking the value for the same sphere type
+                    //neighbours.Add(nodes[new Vector2(pos.x+1,pos.y),comparison])
+                }
+            }
+        }
+        else if (nodes.ContainsKey(new Vector2(pos.x - 1, pos.y)))
+        {
+            if (nodes.TryGetValue(new Vector2(pos.x - 1, pos.y), out int type))
+            {
+                if (type == comparison)
+                {
+                    //Checking the value for the same sphere type
+                    //neighbours.Add(nodes[new Vector2(pos.x+1,pos.y),comparison])
+                }
+            }
+
+        }
+        else if (nodes.ContainsKey(new Vector2(pos.x, pos.y + 1)))
+        {
+            if (nodes.TryGetValue(new Vector2(pos.x , pos.y+1), out int type))
+            {
+                if (type == comparison)
+                {
+                    //Checking the value for the same sphere type
+                    //neighbours.Add(nodes[new Vector2(pos.x+1,pos.y),comparison])
+                }
+            }
+
+        }
+        else if (nodes.ContainsKey(new Vector2(pos.x, pos.y - 1)))
+        {
+            if (nodes.TryGetValue(new Vector2(pos.x, pos.y-1), out int type))
+            {
+                if (type == comparison)
+                {
+                    //Checking the value for the same sphere type
+                    //neighbours.Add(nodes[new Vector2(pos.x+1,pos.y),comparison])
+                }
+            }
+
+        }
+        else
+        {
+            return null;
+        }
+        return neighbours;
     }
 
     /// <summary>
