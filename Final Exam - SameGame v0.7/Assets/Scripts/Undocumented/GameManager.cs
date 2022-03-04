@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
 
         // Setup Cam
-        playerCamera.transform.position = new Vector3(0, 0, -10);
+        playerCamera.transform.position = new Vector3(7.5f, 7.5f, -10f);
         playerCamera.transform.rotation = Quaternion.identity;
         playerCamera.transform.localScale = Vector3.one;
         playerCamera.orthographic = true;

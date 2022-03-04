@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Respresents a game level with a playground of cellCount_X * cellCount_Y elements.
@@ -32,6 +33,7 @@ public class Level
     /// <summary>
     /// Returns or set the Playerscore (points the player has made).
     /// </summary>
+    Dictionary<Vector2,int> nodes = new Dictionary<Vector2,int>();
     public int Points
     {
         get { return points; }
@@ -68,7 +70,8 @@ public class Level
             {
                 int randomNumber = Random.Range(0, prefabs.Length - 1);
                 //GameObject newSphere = new GameObject($"X: {i} Y: {j}");
-                GameObject newSphere = GameObject.Instantiate(prefabs[randomNumber],new Vector2(i,j),Quaternion.identity,parent);
+                GameObject newSphere = GameObject.Instantiate(prefabs[randomNumber], new Vector2(i,j),Quaternion.identity,parent);
+                nodes.Add(new Vector2(i, j), randomNumber);
                 newSphere.name = $"X: {i}, Y: {j}";
             }
         }
@@ -85,7 +88,20 @@ public class Level
     public int HoverCells(Vector3 worldPosition)
     {
         // comment the out the following line
-        return -99;
+        //return -99;
+        Ray ray;
+        RaycastHit hit;
+
+        ray = Camera.main.ScreenPointToRay(worldPosition);
+        if(Physics.Raycast(ray,out hit))
+        {
+            Debug.Log("It's going inside bro");
+            Debug.Log(hit.collider.gameObject.name);
+            GameObject selectedSphere = hit.collider.gameObject;
+            selectedSphere.transform.Rotate(0,selectedSphere.transform.rotation.y +45,0);
+            return 1;
+        }
+        return 0;
     }
 
     /// <summary>
